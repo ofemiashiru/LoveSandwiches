@@ -4,6 +4,7 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -42,7 +43,6 @@ def get_sales_data():
 
 
 def validate_data(values):
-
     """
     Try, converts all string values to ints
     """
@@ -64,7 +64,7 @@ def validate_data(values):
 
 def update_sales_worksheet(data):
     """
-    sends data entered by user to the Google Sheets document adding a new row
+    Sends data entered by user to the Google Sheets document adding a new row
     """
     print('Updating sales worksheet...\n')
 
@@ -77,6 +77,29 @@ def update_sales_worksheet(data):
     print('Sales worksheet updated successfully!\n')
 
 
-sales_data = get_sales_data()
+def calculate_surplus(sales_row):
+    """
+    Calcualtes the surplus data
+    """
+    print('Calculating surplus...\n')
 
-update_sales_worksheet(sales_data)
+    stock = SHEET.worksheet('stock')
+    stock = stock.get_all_values()
+    stock_row = stock[-1]
+    print(f'Last item in list {stock_row}')
+
+
+def main():
+    """
+    Runs all main functions -
+    common practice to place all main function calls
+    into one function called main()
+    """
+    sales_data = get_sales_data()
+    update_sales_worksheet(sales_data)
+    calculate_surplus(sales_data)
+
+
+print('Welcome to Love Sandwiches Database\n')
+# calling our main initial functions
+main()
