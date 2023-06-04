@@ -85,9 +85,15 @@ def calculate_surplus(sales_row):
 
     stock = SHEET.worksheet('stock')
     stock = stock.get_all_values()
-    stock_row = stock[-1]
-    print(f'Last item in list {stock_row}')
+    # list comprehension to return values as int not str
+    stock_row = [int(num) for num in stock[-1]]
 
+    surplus_data = []
+    # using zip to iterate through two collections
+    for stock, sale in zip(stock_row, sales_row):
+        surplus_data.append(stock - sale)
+    
+    return surplus_data
 
 def main():
     """
@@ -97,7 +103,8 @@ def main():
     """
     sales_data = get_sales_data()
     update_sales_worksheet(sales_data)
-    calculate_surplus(sales_data)
+    new_surplus_data = calculate_surplus(sales_data)
+    print(new_surplus_data)
 
 
 print('Welcome to Love Sandwiches Database\n')
