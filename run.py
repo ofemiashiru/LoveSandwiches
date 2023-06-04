@@ -36,11 +36,17 @@ def validate_data(values):
     Try, converts all string values to ints
     """
     try:
+        #converts user input to integers
+        [int(n) for n in values]
+
+        #checks that user has entered exactly 6 items
         if len(values) != 6:
             raise ValueError(
                 f'You need exactly 6 items and you have entered {len(values)}'
             )
+        
     except ValueError as e:
         print(f'Invalid data: {e}, please try again.\n')
+    
 
 get_sales_data()
