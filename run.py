@@ -76,6 +76,20 @@ def update_sales_worksheet(data):
 
     print('Sales worksheet updated successfully!\n')
 
+def update_surplus_worksheet(data):
+    """
+    Sends the new surplus data to the surplus worksheet 
+    """
+    print('Updating surplus worksheet...\n')
+
+    # worksheet() method helps access the individual worksheet in Sheets
+    surplus_worksheet = SHEET.worksheet('surplus')
+
+    # append_row() method adds a new row to the worksheet with our chosen data
+    surplus_worksheet.append_row(data)
+
+    print('Surplus worksheet updated successfully!\n')
+
 
 def calculate_surplus(sales_row):
     """
@@ -104,7 +118,7 @@ def main():
     sales_data = get_sales_data()
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus(sales_data)
-    print(new_surplus_data)
+    update_surplus_worksheet(new_surplus_data)
 
 
 print('Welcome to Love Sandwiches Database\n')
