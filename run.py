@@ -18,22 +18,27 @@ SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
 def get_sales_data():
     """
-    Get sales figures
+    Get sales figures - while loop used to continually 
+    question user until the data entered is valid
     """
     while True:
         print('Please enter sales data from the last market')
         print('Data should be 6 numbers separated by commas')
         print('e.g. 5,10,15,20,25,30\n')
 
+        # request user input
         data_str = input('Please enter data: ')
         
+        # splits user entry into list by the commas
         sales_data = data_str.split(",")
 
+        # checks that the data is valid using the validate_data() function which returns True or False
         if validate_data(sales_data):
             print('Data entered is valid!')
             break
 
-    return sales_data  
+    # if data is valid returns list of integers using list comprehension
+    return [int(n) for n in sales_data]
 
 
 def validate_data(values):
@@ -55,6 +60,23 @@ def validate_data(values):
         return False
 
     return True
-    
-data = get_sales_data()
 
+
+def update_sales_worksheet(data):
+    """
+    sends data entered by user to the Google Sheets document adding a new row
+    """
+    print('Updating sales worksheet...\n')
+
+    # worksheet() method helps access the individual worksheet in Sheets
+    sales_worksheet = SHEET.worksheet('sales')
+
+    #append_row() method adds a new row to the worksheet selected with our chosen data
+    sales_worksheet.append_row(data)
+
+    print('Sales worksheet updated successfully!\n')
+
+
+sales_data = get_sales_data()
+
+update_sales_worksheet(sales_data)
