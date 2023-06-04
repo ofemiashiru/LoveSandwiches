@@ -16,9 +16,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
+
 def get_sales_data():
     """
-    Get sales figures - while loop used to continually 
+    Get sales figures - while loop used to continually
     question user until the data entered is valid
     """
     while True:
@@ -28,11 +29,10 @@ def get_sales_data():
 
         # request user input
         data_str = input('Please enter data: ')
-        
         # splits user entry into list by the commas
         sales_data = data_str.split(",")
 
-        # checks that the data is valid using the validate_data() function which returns True or False
+        # checks that the data is valid using the validate_data() function
         if validate_data(sales_data):
             print('Data entered is valid!')
             break
@@ -42,19 +42,19 @@ def get_sales_data():
 
 
 def validate_data(values):
+
     """
     Try, converts all string values to ints
     """
     try:
-        #converts user input to integers
+        # converts user input to integers
         [int(n) for n in values]
 
-        #checks that user has entered exactly 6 items
+        # checks that user has entered exactly 6 items
         if len(values) != 6:
             raise ValueError(
                 f'You need exactly 6 items and you have entered {len(values)}'
             )
-        
     except ValueError as e:
         print(f'Invalid data: {e}, please try again.\n')
         return False
@@ -71,7 +71,7 @@ def update_sales_worksheet(data):
     # worksheet() method helps access the individual worksheet in Sheets
     sales_worksheet = SHEET.worksheet('sales')
 
-    #append_row() method adds a new row to the worksheet selected with our chosen data
+    # append_row() method adds a new row to the worksheet with our chosen data
     sales_worksheet.append_row(data)
 
     print('Sales worksheet updated successfully!\n')
