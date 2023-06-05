@@ -61,34 +61,51 @@ def validate_data(values):
 
     return True
 
+# Refactored code
+# def update_sales_worksheet(data):
+#     """
+#     Sends data entered by user to the Google Sheets document adding a new row
+#     """
+#     print('Updating sales worksheet...\n')
 
-def update_sales_worksheet(data):
-    """
-    Sends data entered by user to the Google Sheets document adding a new row
-    """
-    print('Updating sales worksheet...\n')
+#     # worksheet() method helps access the individual worksheet in Sheets
+#     sales_worksheet = SHEET.worksheet('sales')
 
-    # worksheet() method helps access the individual worksheet in Sheets
-    sales_worksheet = SHEET.worksheet('sales')
+#     # append_row() method adds a new row to the worksheet with our chosen data
+#     sales_worksheet.append_row(data)
 
-    # append_row() method adds a new row to the worksheet with our chosen data
-    sales_worksheet.append_row(data)
+#     print('Sales worksheet updated successfully!\n')
 
-    print('Sales worksheet updated successfully!\n')
-
-def update_surplus_worksheet(data):
+# Refactored code
+# def update_surplus_worksheet(data):
     """
     Sends the new surplus data to the surplus worksheet 
     """
-    print('Updating surplus worksheet...\n')
+    # print('Updating surplus worksheet...\n')
 
     # worksheet() method helps access the individual worksheet in Sheets
-    surplus_worksheet = SHEET.worksheet('surplus')
+    # surplus_worksheet = SHEET.worksheet('surplus')
 
     # append_row() method adds a new row to the worksheet with our chosen data
-    surplus_worksheet.append_row(data)
+    # surplus_worksheet.append_row(data)
 
-    print('Surplus worksheet updated successfully!\n')
+    # print('Surplus worksheet updated successfully!\n')
+
+
+def update_worksheet(data, worksheet):
+    """
+    Update the relevant worksheet with the new row of data
+    """
+
+    print(f'Updating {worksheet} worksheet...\n')
+
+    # worksheet() method helps access the individual worksheet in Sheets
+    new_worksheet = SHEET.worksheet(worksheet)
+
+    # append_row() method adds a new row to the worksheet with our chosen data
+    new_worksheet.append_row(data)
+
+    print(f'{worksheet.capitalize()} worksheet updated successfully!\n')
 
 
 def calculate_surplus(sales_row):
@@ -109,6 +126,7 @@ def calculate_surplus(sales_row):
     
     return surplus_data
 
+
 def main():
     """
     Runs all main functions -
@@ -116,9 +134,9 @@ def main():
     into one function called main()
     """
     sales_data = get_sales_data()
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 print('Welcome to Love Sandwiches Database\n')
