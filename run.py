@@ -122,9 +122,23 @@ def calculate_surplus(sales_row):
     surplus_data = []
     # using zip to iterate through two collections
     for stock, sale in zip(stock_row, sales_row):
-        surplus_data.append(stock - sale)
-    
+        surplus_data.append(stock - sale)    
     return surplus_data
+
+
+def get_last_five_entries_sales():
+    """
+    Collect last 5 entries for each sandwich sold
+    """
+
+    sales = SHEET.worksheet('sales')
+
+    columns = []
+
+    for i in range(1, 7):
+        col = sales.col_values(i)
+        columns.append(col[-5:])
+    return columns
 
 
 def main():
@@ -141,4 +155,5 @@ def main():
 
 print('Welcome to Love Sandwiches Database\n')
 # calling our main initial functions
-main()
+# main()
+sales_columns = get_last_five_entries_sales()
